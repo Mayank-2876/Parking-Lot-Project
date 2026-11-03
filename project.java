@@ -2,8 +2,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 class car {
 
-    String carId;
-    String brand;
+    private String carId;
+    private String brand;
 
     car(String carId, String brand) {
         this.carId = carId;
@@ -71,6 +71,7 @@ public void parkCar(car abc) {
                     System.out.println("total fees is "+ fees);
 
                     cars[i] = null;
+                    entryTimes[i]=null;
                     System.out.println("Car removed successfully!!");
 
 
