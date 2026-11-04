@@ -3,29 +3,74 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-class car {
+abstract class Vehicle {
 
-    private String carId;
+    private String vehicleId;
     private String brand;
 
-    car(String carId, String brand) {
-        this.carId = carId;
+    Vehicle(String vehicleId, String brand) {
+        this.vehicleId = vehicleId;
         this.brand = brand;
     }
 
-    public String getCarId() {
-        return carId;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
     public String getBrand() {
         return brand;
     }
 
+    public abstract String getVehicleType();
+}
+
+class Car extends Vehicle {
+
+    Car(String id, String brand) {
+        super(id, brand);
+    }
+    @Override
+    public String getVehicleType() {
+        return "Car";
+    }
+}
+
+class Bike extends Vehicle {
+
+    Bike(String id, String brand) {
+        super(id, brand);
+    }
+
+    public String getVehicleType() {
+        return "Bike";
+    }
+}
+
+class Bus extends Vehicle {
+
+    Bus(String id, String brand) {
+        super(id, brand);
+    }
+
+    public String getVehicleType() {
+        return "Bus";
+    }
+}
+
+class Truck extends Vehicle {
+
+    Truck(String id, String brand) {
+        super(id, brand);
+    }
+
+    public String getVehicleType() {
+        return "Truck";
+    }
 }
 
 class parkingLot {
 
-private ArrayList<car> cars = new ArrayList<>();
+private ArrayList<Vehicle> vehicles = new ArrayList<>();
 
 private HashMap<String, LocalDateTime> entryTimes =
     new HashMap<>();
@@ -33,20 +78,20 @@ private HashMap<String, LocalDateTime> entryTimes =
 private final int capacity = 10;
 
 
-public void parkCar(car abc) {
+public void parkVehicle(Vehicle abc) {
 try{
-    if (cars.size() >= capacity) {
+    if (vehicles.size() >= capacity) {
     throw new Exception("Parking is full!!");
 }
 
-if (entryTimes.containsKey(abc.getCarId())) {
+if (entryTimes.containsKey(abc.getVehicleId())) {
     throw new Exception("Car already parked!!");
 }
 
-cars.add(abc);
+vehicles.add(abc);
 
 entryTimes.put(
-    abc.getCarId(),
+    abc.getVehicleId(),
     LocalDateTime.now()
 );
 
@@ -59,18 +104,18 @@ catch (Exception e) {
         
    
 
-    public void removeCar(String abc) {
-        car foundCar = null;
+    public void removeVehicle(String abc) {
+        Vehicle foundVehicle = null;
 
-        for (car c : cars) {
+        for (Vehicle c : vehicles) {
 
-            if (c.getCarId().equals(abc)) {
-                foundCar = c;
+            if (c.getVehicleId().equals(abc)) {
+                foundVehicle = c;
                 break;
             }
         }
 
-        if (foundCar != null) {
+        if (foundVehicle != null) {
 
             LocalDateTime exitTime = LocalDateTime.now();
 
@@ -89,7 +134,7 @@ catch (Exception e) {
 
             System.out.println("Total fees is " + fees);
 
-            cars.remove(foundCar);
+            vehicles.remove(foundVehicle);
 
             entryTimes.remove(abc);
 
@@ -102,24 +147,24 @@ catch (Exception e) {
         }
     }
 
-    public void displayCar() {
-        for (int i = 0; i < cars.size(); i++) {
+    public void displayVehicle() {
+        for (int i = 0; i < vehicles.size(); i++) {
 
             System.out.println("Parking slot no.- " + (i + 1));
 
-            System.out.println(cars.get(i).getCarId());
+            System.out.println(vehicles.get(i).getVehicleId());
 
-            System.out.println(cars.get(i).getBrand());
+            System.out.println(vehicles.get(i).getBrand());
         }
 }
 
 public void avaialableSlots(){
    System.out.println(
-            "Available slots are " + (capacity - cars.size())
+            "Available slots are " + (capacity - vehicles.size())
         );
 
         System.out.println(
-            "Occupied slots are " + cars.size()
+            "Occupied slots are " + vehicles.size()
         );
     }
 }
@@ -128,39 +173,20 @@ public void avaialableSlots(){
 public class project{
     public static void main(String[] arg){
         parkingLot p1 = new parkingLot();
-        car c1=new car("dl12b4444","toyota");
-        car c2=new car("hr33u9878","bmw");
-        car c3=new car("rj32u9878","bmw");
-        car c4=new car("GM32u9878","bmw");
-        car c5=new car("ME32u9878","bmw");
-        car c6=new car("ERr32u9878","bmw");
-        car c7=new car("Pr32u9878","bmw");
-        car c8=new car("Qr32u9878","bmw");
-        car c9=new car("Tr32u9878","bmw");
-        car c10=new car("Xr32u9878","bmw");
-        car c11=new car("Zr32u9878","bmw");
-        car c12=new car("Lr32u9878","bmw");
-        p1.parkCar(c1);
-        p1.parkCar(c2);
-        p1.parkCar(c3);
-        p1.parkCar(c4);
-        p1.parkCar(c5);
-        p1.parkCar(c6);
-        p1.parkCar(c7);
-        p1.parkCar(c8);
-        p1.parkCar(c9);
-        p1.parkCar(c10);
-        p1.parkCar(c11);
-        p1.parkCar(c12);
-        p1.displayCar();
+        Vehicle v1 = new Car("dl12b4444", "toyota");
+        Vehicle v2 = new Bike("dl33b4444", "Royal Enfield");
+        Vehicle v3 = new Bus("hr33u9878", "Volvo");
+        Vehicle v4 = new Truck("dl44b5555", "Tata");
+
+        p1.parkVehicle(v1);
+        p1.parkVehicle(v2);
+        p1.parkVehicle(v3);
+        p1.parkVehicle(v4);
+        p1.displayVehicle();
         p1.avaialableSlots();
-        p1.removeCar("dl12b4444");
-        p1.displayCar();
+        p1.removeVehicle("dl12b4444");
+        p1.displayVehicle();
         p1.avaialableSlots();
-        
-
-
-
     }
 }
 
