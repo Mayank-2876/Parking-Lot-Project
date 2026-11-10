@@ -22,6 +22,7 @@ abstract class Vehicle {
     }
 
     public abstract String getVehicleType();
+    public abstract double getHourlyRate();
 }
 
 class Car extends Vehicle {
@@ -33,7 +34,13 @@ class Car extends Vehicle {
     public String getVehicleType() {
         return "Car";
     }
+
+     @Override
+    public double getHourlyRate() {
+        return 40.0;
+    }
 }
+
 
 class Bike extends Vehicle {
 
@@ -43,6 +50,10 @@ class Bike extends Vehicle {
 
     public String getVehicleType() {
         return "Bike";
+    }
+    @Override
+    public double getHourlyRate() {
+        return 20.0;
     }
 }
 
@@ -55,6 +66,11 @@ class Bus extends Vehicle {
     public String getVehicleType() {
         return "Bus";
     }
+
+    @Override
+    public double getHourlyRate() {
+        return 50.0;
+    }
 }
 
 class Truck extends Vehicle {
@@ -65,6 +81,11 @@ class Truck extends Vehicle {
 
     public String getVehicleType() {
         return "Truck";
+    }
+
+    @Override
+    public double getHourlyRate() {
+        return 60.0;
     }
 }
 
@@ -130,7 +151,7 @@ catch (Exception e) {
                 hours = 1;
             }
 
-            long fees = hours * 20;
+            double fees = hours * foundVehicle.getHourlyRate();
 
             System.out.println("Total fees is " + fees);
 
@@ -187,6 +208,11 @@ public class project{
         p1.removeVehicle("dl12b4444");
         p1.displayVehicle();
         p1.avaialableSlots();
+
+
+        System.out.println(v1.getHourlyRate());
+        System.out.println(v2.getHourlyRate());
+        System.out.println(v3.getHourlyRate());
     }
 }
 
